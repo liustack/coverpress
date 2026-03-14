@@ -6,8 +6,6 @@ import { getPreset } from './presets.ts';
 type WaitUntilState = 'load' | 'domcontentloaded' | 'networkidle';
 
 const WAIT_UNTIL_STATES = new Set<WaitUntilState>(['load', 'domcontentloaded', 'networkidle']);
-const MIN_DIMENSION = 100;
-const MAX_DIMENSION = 5000;
 const MIN_SCALE = 1;
 const MAX_SCALE = 4;
 
@@ -39,9 +37,7 @@ function validateRange(name: string, value: number, min: number, max: number): v
 export interface Options {
     input: string;
     output: string;
-    preset?: string;
-    width?: number;
-    height?: number;
+    preset: string;
     scale?: number;
     safe?: boolean;
     waitUntil?: string;
@@ -60,16 +56,13 @@ export interface Result {
 }
 
 export async function render(options: Options): Promise<Result> {
-    const preset = options.preset ? getPreset(options.preset) : getPreset('og');
-    const width = options.width ?? preset.width;
-    const height = options.height ?? preset.height;
+    const preset = getPreset(options.preset);
+    const { width, height } = preset;
     const scale = options.scale ?? 2;
     const safeMode = options.safe ?? false;
     const waitUntil = normalizeWaitUntil(options.waitUntil);
     const timeout = normalizeTimeout(options.timeout);
 
-    validateRange('Width', width, MIN_DIMENSION, MAX_DIMENSION);
-    validateRange('Height', height, MIN_DIMENSION, MAX_DIMENSION);
     validateRange('Scale', scale, MIN_SCALE, MAX_SCALE);
 
     let browser: Browser | null = null;
@@ -102,7 +95,7 @@ export async function render(options: Options): Promise<Result> {
             throw new Error(`Input not found: ${options.input}`);
         }
 
-        // Force body to match preset dimensions (restoring old behavior)
+        // Force body to match preset dimensions
         await page.addStyleTag({
             content: `
                 html, body {

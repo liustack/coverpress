@@ -4,18 +4,19 @@ declare const __APP_VERSION__: string;
 
 import { Command } from 'commander';
 import { render } from './renderer.ts';
+import { imagePresets } from './presets.ts';
+
+const presetNames = Object.keys(imagePresets).join(', ');
 
 const program = new Command();
 
 program
-    .name('webpress')
-    .description('Render local HTML to PNG images')
+    .name('coverpress')
+    .description('Generate platform cover images from HTML presets')
     .version(__APP_VERSION__)
     .requiredOption('-i, --input <path>', 'Input HTML file path')
     .requiredOption('-o, --output <path>', 'Output PNG file path')
-    .option('-p, --preset <name>', 'Image preset (og, infographic, poster, banner, twitter, youtube, xiaohongshu, wechat)', 'og')
-    .option('--width <number>', 'Custom width in pixels')
-    .option('--height <number>', 'Custom height in pixels')
+    .requiredOption('-p, --preset <name>', `Image preset (${presetNames})`)
     .option('--scale <number>', 'Device scale factor', '2')
     .option('--wait-until <state>', 'Navigation waitUntil (load, domcontentloaded, networkidle)', 'networkidle')
     .option('--timeout <ms>', 'Navigation timeout in milliseconds', '30000')
@@ -31,8 +32,6 @@ program
                 input: options.input,
                 output: options.output,
                 preset: options.preset,
-                width: options.width ? parseInt(options.width, 10) : undefined,
-                height: options.height ? parseInt(options.height, 10) : undefined,
                 scale: parseFloat(options.scale),
                 waitUntil: options.waitUntil,
                 timeout,

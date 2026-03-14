@@ -1,50 +1,50 @@
-# WebPress
+# CoverPress
 
-A CLI toolkit for AI agents to render local HTML files into high-quality PNG images.
+A CLI toolkit for AI agents to generate platform cover images from local HTML presets.
 
 中文说明请见：[README.zh-CN.md](README.zh-CN.md)
 
 ## Features
 
-- Purpose-built for PNG output (`webpress` only)
+- Preset-only cover generation (no custom dimensions)
 - Local HTML only (remote URLs are not supported)
-- 8 built-in presets for social and content images
+- 8 built-in presets for social and content covers
 - Deterministic rendering with Playwright + Chromium
 - `#container`-based screenshot capture for predictable framing
 
 ## Installation
 
 ```bash
-npm install -g @liustack/webpress
+npm install -g @liustack/coverpress
 npx playwright install chromium
 ```
 
 Or run with `npx`:
 
 ```bash
-npx @liustack/webpress [options]
+npx @liustack/coverpress [options]
 ```
 
 Or install as an **Agent Skill** — tell any AI coding tool that supports agent skills (Claude Code, Codex, OpenCode, Cursor, Antigravity, etc.):
 
 ```
-Install the skill from https://github.com/liustack/webpress
+Install the skill from https://github.com/liustack/coverpress
 ```
 
 Or use the `skills` CLI directly:
 
 ```bash
-npx skills add https://github.com/liustack/webpress --skill webpress
+npx skills add https://github.com/liustack/coverpress --skill coverpress
 ```
 
 ## Usage
 
 ```bash
 # OG card
-webpress -i card.html -o og.png --preset og
+coverpress -i card.html -o og.png --preset og
 
 # Infographic
-webpress -i stats.html -o infographic.png --preset infographic
+coverpress -i stats.html -o infographic.png --preset infographic
 ```
 
 ## Presets
@@ -87,9 +87,7 @@ webpress -i stats.html -o infographic.png --preset infographic
 
 - `-i, --input <path>` input HTML file path
 - `-o, --output <path>` output PNG file path
-- `-p, --preset <name>` preset name (default: `og`)
-- `--width <number>` custom width
-- `--height <number>` custom height
+- `-p, --preset <name>` preset name (**required**)
 - `--scale <number>` device scale factor (default: `2`)
 - `--wait-until <state>` `load | domcontentloaded | networkidle`
 - `--timeout <ms>` timeout in milliseconds
@@ -99,7 +97,7 @@ webpress -i stats.html -o infographic.png --preset infographic
 
 ## AI Agent Skill
 
-- [webpress/SKILL.md](skills/webpress/SKILL.md)
+- [coverpress/SKILL.md](skills/coverpress/SKILL.md)
 
 ## License
 

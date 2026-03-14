@@ -1,48 +1,48 @@
-# WebPress
+# CoverPress
 
-面向 AI Agent 的 HTML 渲染 CLI，可将本地 HTML 文件输出为高质量 PNG 图片。
+面向 AI Agent 的封面图生成 CLI，可将本地 HTML 按预设尺寸输出为高质量 PNG 图片。
 
 ## 特性
 
-- 专注 PNG 输出（仅 `webpress`）
+- 仅预设模式生成封面（不支持自定义尺寸）
 - 仅支持本地 HTML（不支持远程 URL）
-- 内置 8 种图片预设
+- 内置 8 种平台封面预设
 - 基于 Playwright + Chromium 的稳定渲染
 - 使用 `#container` 作为截图区域，输出更可控
 
 ## 安装
 
 ```bash
-npm install -g @liustack/webpress
+npm install -g @liustack/coverpress
 npx playwright install chromium
 ```
 
 或使用 `npx`：
 
 ```bash
-npx @liustack/webpress [options]
+npx @liustack/coverpress [options]
 ```
 
 也可以作为 **Agent Skill** 安装 — 在任何支持 Agent Skill 的 AI 编程工具（Claude Code、Codex、OpenCode、Cursor、Antigravity 等）中输入：
 
 ```
-帮我安装这个 skill：https://github.com/liustack/webpress
+帮我安装这个 skill：https://github.com/liustack/coverpress
 ```
 
 或使用 `skills` CLI 直接安装：
 
 ```bash
-npx skills add https://github.com/liustack/webpress --skill webpress
+npx skills add https://github.com/liustack/coverpress --skill coverpress
 ```
 
 ## 用法
 
 ```bash
 # 生成 OG 卡片
-webpress -i card.html -o og.png --preset og
+coverpress -i card.html -o og.png --preset og
 
 # 生成信息图
-webpress -i stats.html -o infographic.png --preset infographic
+coverpress -i stats.html -o infographic.png --preset infographic
 ```
 
 ## 预设尺寸
@@ -85,9 +85,7 @@ webpress -i stats.html -o infographic.png --preset infographic
 
 - `-i, --input <path>` 输入 HTML 路径
 - `-o, --output <path>` 输出 PNG 路径
-- `-p, --preset <name>` 预设名称（默认 `og`）
-- `--width <number>` 自定义宽度
-- `--height <number>` 自定义高度
+- `-p, --preset <name>` 预设名称（**必填**）
 - `--scale <number>` 设备缩放（默认 `2`）
 - `--wait-until <state>` `load | domcontentloaded | networkidle`
 - `--timeout <ms>` 超时时间（毫秒）
@@ -97,7 +95,7 @@ webpress -i stats.html -o infographic.png --preset infographic
 
 ## AI Agent Skill
 
-- [webpress/SKILL.md](skills/webpress/SKILL.md)
+- [coverpress/SKILL.md](skills/coverpress/SKILL.md)
 
 ## License
 
